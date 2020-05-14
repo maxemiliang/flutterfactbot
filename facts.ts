@@ -1,5 +1,4 @@
 import * as fs from 'fs';
-import { callbackify } from 'util';
 
 export const getRandomFact = async (
 	channel: string,
