@@ -1,24 +1,27 @@
 {
-  "name": "flutterfactoftheday_bot",
-  "version": "0.1.0",
-  "description": "A stupid twitch bot",
-  "main": "bot.js",
-  "scripts": {
-    "watch": "npx tsc -w",
-    "build": "npx tsc",
-    "start": "node -r dotenv/config dist/bot.js",
-    "start:dev": "npx nodemon -r dotenv/config dist/bot.js"
-  },
-  "author": "Maxemilian Grönblom <maxemiliang@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "tmi.js": "^1.5.0",
-    "typescript": "^3.9.2"
-  },
-  "devDependencies": {
-    "@types/node": "^14.0.1",
-    "@types/tmi.js": "^1.4.0",
-    "nodemon": "^2.0.3"
-  }
+	"name": "flutterfactoftheday_bot",
+	"version": "0.1.0",
+	"description": "A stupid twitch bot",
+	"main": "bot.js",
+	"repository": {
+		"url": "https://git.maxemiliang.cloud/maxemiliang/flutterfactbot"
+	},
+	"scripts": {
+		"watch": "npx tsc -w",
+		"build": "npx tsc",
+		"start": "node -r dotenv/config dist/bot.js",
+		"start:dev": "npx nodemon -r dotenv/config dist/bot.js"
+	},
+	"author": "Maxemilian Grönblom <maxemiliang@gmail.com>",
+	"license": "MIT",
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"tmi.js": "^1.5.0",
+		"typescript": "^3.9.2"
+	},
+	"devDependencies": {
+		"@types/node": "^14.0.1",
+		"@types/tmi.js": "^1.4.0",
+		"nodemon": "^2.0.3"
+	}
 }
