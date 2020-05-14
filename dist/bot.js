@@ -42,7 +42,9 @@ client.on('message', (channel, tags, message, self) => {
     const command = message.trim().split(' ')[0];
     const arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : '';
     if (command.toLowerCase() === '!ffotd') {
-        facts_1.getRandomFact(channel, sendMessage);
+        if (arg == '')
+            facts_1.getRandomFact(channel, sendMessage);
+        // TODO: implement a "direct" fact caller which reads a direct fact.
     }
 });
 const sendMessage = (channel, line) => {
