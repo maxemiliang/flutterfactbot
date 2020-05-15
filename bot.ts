@@ -25,12 +25,12 @@ client.on('message', (channel, tags, message, self) => {
 	const command = message.trim().split(' ')[0];
 	const arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : '';
 	if (command.toLowerCase() === '!ffotd') {
-		log(`[COMMAND] FlutterFactOfTheDay`);
+		log(`[COMMAND] name: ffotd; arguments: ${arg}`);
 		if (arg === '') getRandomFact(channel, sendFactLine);
 		// TODO: implement a "direct" fact caller which reads a direct fact.
 	}
 	if (command.toLowerCase() === '!pubdev') {
-		log(`[COMMAND] pubdev: ${arg}`);
+		log(`[COMMAND] name: pubdev; arguments: ${arg}`);
 		// Checks if there is an argument and if its somewhat valid
 		if (arg === '' || !arg.match(/^\w+$/)) {
 			client
@@ -69,7 +69,7 @@ const sendPubDevInfo = (
 	response: any
 ) => {
 	if (response === null) {
-		client.say(channel, 'Package info not found');
+		client.say(channel, `${tags.username}: Package info not found FeelsBadMan`);
 		return;
 	}
 	client

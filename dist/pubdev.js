@@ -28,7 +28,7 @@ exports.getPubDevPackageInfo = (channel, tags, search, callback) => {
                 callback(channel, tags, null);
         })
             .catch((err) => {
-            console.error(err);
+            log_1.log('[AXIOS] Error with request');
             callback(channel, tags, null);
         });
     else {
