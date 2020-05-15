@@ -24,6 +24,7 @@ client.on('message', (channel, tags, message, self) => {
 	if (self) return;
 	const command = message.trim().split(' ')[0];
 	const arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : '';
+	// TODO: clean this up a bit maybe
 	if (command.toLowerCase() === '!ffotd') {
 		log(`[COMMAND] name: ffotd; arguments: ${arg}`);
 		if (arg === '') getRandomFact(channel, sendFactLine);
