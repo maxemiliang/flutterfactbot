@@ -21,8 +21,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getRandomFact = void 0;
 const fs = __importStar(require("fs"));
+/**
+ * Reads a txt file and selects a random line which is sent to the callback
+ * @param channel Channel to be passed on to the callback
+ * @param callback The callback which will be called once a random line is selected
+ */
 exports.getRandomFact = async (channel, callback) => {
-    await fs.readFile('facts.txt', (err, data) => {
+    fs.readFile('facts.txt', (err, data) => {
         if (err)
             throw err;
         const lines = data.toString().split('\n');
