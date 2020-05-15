@@ -1,6 +1,8 @@
-version: '3'
+version: "3.2"
 services:
   flutterfactbot:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production

@@ -2,6 +2,7 @@ import * as tmi from 'tmi.js';
 import { getRandomFact } from './facts';
 import { AxiosResponse } from 'axios';
 import { getPubDevPackageInfo } from './pubdev';
+import { log } from './log';
 
 const client = tmi.Client({
 	options: {
@@ -24,10 +25,12 @@ client.on('message', (channel, tags, message, self) => {
 	const command = message.trim().split(' ')[0];
 	const arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : '';
 	if (command.toLowerCase() === '!ffotd') {
+		log(`[COMMAND] FlutterFactOfTheDay`);
 		if (arg === '') getRandomFact(channel, sendFactLine);
 		// TODO: implement a "direct" fact caller which reads a direct fact.
 	}
 	if (command.toLowerCase() === '!pubdev') {
+		log(`[COMMAND] pubdev: ${arg}`);
 		// Checks if there is an argument and if its somewhat valid
 		if (arg === '' || !arg.match(/^\w+$/)) {
 			client
@@ -40,7 +43,7 @@ client.on('message', (channel, tags, message, self) => {
 		}
 		const search = arg.trim().toLowerCase();
 		// Call API
-		getPubDevPackageInfo(channel, search, sendPubDevInfo);
+		getPubDevPackageInfo(channel, tags, search, sendPubDevInfo);
 	}
 });
 
@@ -60,16 +63,27 @@ const sendFactLine = (channel: string, line: string) => {
  * @param channel channel to send message to.
  * @param response Pub dev api response.
  */
-const sendPubDevInfo = (channel: string, response: AxiosResponse | null) => {
-	if (response === null || response.status !== 200) {
+const sendPubDevInfo = (
+	channel: string,
+	tags: tmi.ChatUserstate,
+	response: any
+) => {
+	if (response === null) {
 		client.say(channel, 'Package info not found');
 		return;
 	}
-	const info = response.data;
 	client
 		.say(
 			channel,
-			`Package name: ${info.latest.pubspec.name}; Package description: "${info.latest.pubspec.description}"; Package homepage: https://pub.dev/packages/${info.latest.pubspec.name}`
+			`${tags.username}: 📦 name: "${response.latest.pubspec.name}" 📦 description: "${response.latest.pubspec.description}" 📦 pub.dev: https://pub.dev/packages/${response.latest.pubspec.name}`
 		)
 		.catch((err) => console.error);
 }; // Have to be done with a callback this way as async is stupid
+
+client.on('connected', (address, port) => {
+	log(`[CONNECT] Bot connected on: ${address}:${port}`);
+});
+
+client.on('join', (channel, username, self) => {
+	if (self) log(`[CHANNEL] Bot joining: ${channel}`);
+});

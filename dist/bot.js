@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tmi = __importStar(require("tmi.js"));
 const facts_1 = require("./facts");
 const pubdev_1 = require("./pubdev");
+const log_1 = require("./log");
 const client = tmi.Client({
     options: {
         debug: process.env.NODE_ENV == 'production' ? false : true,
@@ -43,11 +44,13 @@ client.on('message', (channel, tags, message, self) => {
     const command = message.trim().split(' ')[0];
     const arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : '';
     if (command.toLowerCase() === '!ffotd') {
+        log_1.log(`[COMMAND] FlutterFactOfTheDay`);
         if (arg === '')
             facts_1.getRandomFact(channel, sendFactLine);
         // TODO: implement a "direct" fact caller which reads a direct fact.
     }
     if (command.toLowerCase() === '!pubdev') {
+        log_1.log(`[COMMAND] pubdev: ${arg}`);
         // Checks if there is an argument and if its somewhat valid
         if (arg === '' || !arg.match(/^\w+$/)) {
             client
@@ -57,7 +60,7 @@ client.on('message', (channel, tags, message, self) => {
         }
         const search = arg.trim().toLowerCase();
         // Call API
-        pubdev_1.getPubDevPackageInfo(channel, search, sendPubDevInfo);
+        pubdev_1.getPubDevPackageInfo(channel, tags, search, sendPubDevInfo);
     }
 });
 /**
@@ -75,13 +78,19 @@ const sendFactLine = (channel, line) => {
  * @param channel channel to send message to.
  * @param response Pub dev api response.
  */
-const sendPubDevInfo = (channel, response) => {
-    if (response === null || response.status !== 200) {
+const sendPubDevInfo = (channel, tags, response) => {
+    if (response === null) {
         client.say(channel, 'Package info not found');
         return;
     }
-    const info = response.data;
     client
-        .say(channel, `Package name: ${info.latest.pubspec.name}; Package description: "${info.latest.pubspec.description}"; Package homepage: https://pub.dev/packages/${info.latest.pubspec.name}`)
+        .say(channel, `${tags.username}: 📦 name: "${response.latest.pubspec.name}" 📦 description: "${response.latest.pubspec.description}" 📦 pub.dev: https://pub.dev/packages/${response.latest.pubspec.name}`)
         .catch((err) => console.error);
 }; // Have to be done with a callback this way as async is stupid
+client.on('connected', (address, port) => {
+    log_1.log(`[CONNECT] Bot connected on: ${address}:${port}`);
+});
+client.on('join', (channel, username, self) => {
+    if (self)
+        log_1.log(`[CHANNEL] Bot joining: ${channel}`);
+});
