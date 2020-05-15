@@ -4,6 +4,7 @@ import { AxiosResponse } from 'axios';
 import { getPubDevPackageInfo } from './pubdev';
 import { log } from './log';
 
+// Initalizes the twitch bot client
 const client = tmi.Client({
 	options: {
 		debug: process.env.NODE_ENV == 'production' ? false : true,
@@ -16,17 +17,20 @@ const client = tmi.Client({
 		username: process.env.TWITCH_USERNAME,
 		password: process.env.TWITCH_OAUTH,
 	},
-	channels: ['rushkib', 'pixelogicdev'],
+	channels: ['rushkib', 'pixelogicdev'], // Channels that the bot should monitor.
 });
 
+// Connect to twitch and the channels
 client.connect();
+
+// Start monitoring messages
 client.on('message', (channel, tags, message, self) => {
-	if (self) return;
-	const command = message.trim().split(' ')[0];
-	const arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : '';
-	// TODO: clean this up a bit maybe
+	if (self) return; // Dont do anything with your own messages
+	const command = message.trim().split(' ')[0]; // Nice solution: Kappa
+	const arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : ''; // Even nicer solution, not error prone
+	// TODO: clean this up a bit maybe, use switch cases
 	if (command.toLowerCase() === '!ffotd') {
-		log(`[COMMAND] name: ffotd; arguments: ${arg}`);
+		log(`[COMMAND] name: ffotd; arguments: ${arg}`); // Why did i make my own log solution, because i can of course
 		if (arg === '') getRandomFact(channel, sendFactLine);
 		// TODO: implement a "direct" fact caller which reads a direct fact.
 	}
@@ -39,12 +43,11 @@ client.on('message', (channel, tags, message, self) => {
 					channel,
 					`${tags.username}, please provide a valid package name to search for. NotLikeThis`
 				)
-				.catch((err) => console.error);
+				.catch((err) => console.error); // clean error handling Pog
 			return;
 		}
-		const search = arg.trim().toLowerCase();
-		// Call API
-		getPubDevPackageInfo(channel, tags, search, sendPubDevInfo);
+		const search = arg.trim().toLowerCase(); // Nice and safe command handling
+		getPubDevPackageInfo(channel, tags, search, sendPubDevInfo); // Call the pub.dev api and insert callback here when its done
 	}
 });
 
@@ -70,6 +73,7 @@ const sendPubDevInfo = (
 	response: any
 ) => {
 	if (response === null) {
+		// Error handling stuff
 		client.say(channel, `${tags.username}: Package info not found FeelsBadMan`);
 		return;
 	}
@@ -82,9 +86,9 @@ const sendPubDevInfo = (
 }; // Have to be done with a callback this way as async is stupid
 
 client.on('connected', (address, port) => {
-	log(`[CONNECT] Bot connected on: ${address}:${port}`);
+	log(`[CONNECT] Bot connected on: ${address}:${port}`); // More nice logging
 });
 
 client.on('join', (channel, username, self) => {
-	if (self) log(`[CHANNEL] Bot joining: ${channel}`);
+	if (self) log(`[CHANNEL] Bot joining: ${channel}`); // Even more nice logging
 });

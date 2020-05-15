@@ -27,11 +27,12 @@ const fs = __importStar(require("fs"));
  * @param callback The callback which will be called once a random line is selected
  */
 exports.getRandomFact = async (channel, callback) => {
+    // Facts.txt can be filled with interesting facts
     fs.readFile('facts.txt', (err, data) => {
         if (err)
-            throw err;
-        const lines = data.toString().split('\n');
-        const line = lines[Math.floor(Math.random() * lines.length)];
-        callback(channel, line);
+            throw err; // I think we need to throw an error if the file cannot be read
+        const lines = data.toString().split('\n'); // Read all lines as an array
+        const line = lines[Math.floor(Math.random() * lines.length)]; // Choose a random line using some very advanced math, thanks SO
+        callback(channel, line); // Call the callback with channel and the random line
     });
 };
