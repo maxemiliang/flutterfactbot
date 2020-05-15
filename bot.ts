@@ -75,7 +75,7 @@ const sendPubDevInfo = (
 	client
 		.say(
 			channel,
-			`${tags.username}: 📦 name: "${response.latest.pubspec.name}" 📦 description: "${response.latest.pubspec.description}" 📦 pub.dev: https://pub.dev/packages/${response.latest.pubspec.name}`
+			`${tags.username}: 📦 name: "${response.latest.pubspec.name}" 📦 description: "${response.latest.pubspec.description}" 📦 pubdev: https://pub.dev/packages/${response.latest.pubspec.name}`
 		)
 		.catch((err) => console.error);
 }; // Have to be done with a callback this way as async is stupid
