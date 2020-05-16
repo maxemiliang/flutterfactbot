@@ -51,6 +51,14 @@ client.on('message', (channel, tags, message, self) => {
 		case '!addfact':
 			// for later if (arg !== '') handleFactAdd(channel, tags, client, message); // We pass the message as this might require some more argument handling
 			break;
+		case '!fthon':
+			client
+				.say(
+					channel,
+					'FlutterThon is a 24 hour livestream event where your goal is to build the best thing you can with Flutter! The event has started, but you can still sign up and participate by visiting https://flutterthon-2020.devpost.com/ to get started! Make sure to join the !discord for more information. Happy Hacking :).'
+				)
+				.catch((err) => console.error);
+			break;
 		default:
 			if (command.indexOf('!') > -1)
 				log(`[COMMAND] command not found: ${command}`);
