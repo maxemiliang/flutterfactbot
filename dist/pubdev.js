@@ -8,7 +8,7 @@ const axios_1 = __importDefault(require("axios"));
 const lokijs_1 = __importDefault(require("lokijs"));
 const log_1 = require("./log");
 // Initalize the database in memeory
-const db = new lokijs_1.default('pubdev', {
+const db = new lokijs_1.default('pubdevpackages', {
     persistenceMethod: 'memory',
 });
 const packages = db.addCollection('packages'); // Create a collection

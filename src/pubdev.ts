@@ -4,7 +4,7 @@ import loki from 'lokijs';
 import { log } from './log';
 
 // Initalize the database in memeory
-const db = new loki('pubdev', {
+const db = new loki('pubdevpackages', {
 	persistenceMethod: 'memory',
 });
 const packages = db.addCollection('packages'); // Create a collection

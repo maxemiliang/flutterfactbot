@@ -3,7 +3,7 @@ declare global {
 		interface ProcessEnv {
 			TWITCH_OAUTH: string;
 			TWITCH_USERNAME: string;
-			NODE_ENV: "development" | "production";
+			NODE_ENV: 'development' | 'production';
 		}
 	}
 }
