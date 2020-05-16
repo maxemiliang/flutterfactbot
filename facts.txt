@@ -2,8 +2,12 @@ The command 'flutter doctor' doesn't tell you your symptoms but it does tell you
 Flutter has a built in navigation library, unlike some "native" frameworks.
 Flutter uses the dart language, which may or may not be the best language ever concieved.
 With Flutter you can build an app in under 150 days.
-Flutter <3 Firebase! So does everyone else too, right?
+Flutter <3 Firebase! So does everyone else too, right? Kappa
 Did you know that Flutter can build to all platforms, not only Android and iOS, amazing.
 This bot is not in any way shape or form affiliated with flutter or dart. #sellout
 Flutter can speed up your cross-platform development speeds with up to 80% (Numbers may vary).
 The command 'flutter run' doesn't actually exercise you, it just runs your app. FeelsBadMan
+Flutter is so optimized that it runs faster than your phone (results pending).
+Material design is around 40% more UX friendly than competitors. Kappa
+Flutter comes with dart devtools to easily be able to debug your poorly written code. 
+Flutter has Platform Channels which allow you to interface with platform-specific code, should you ever need it.

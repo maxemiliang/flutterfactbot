@@ -44,26 +44,33 @@ client.connect();
 client.on('message', (channel, tags, message, self) => {
     if (self)
         return; // Dont do anything with your own messages
-    const command = message.trim().split(' ')[0]; // Nice solution: Kappa
-    const arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : ''; // Even nicer solution, not error prone
-    // TODO: clean this up a bit maybe, use switch cases
-    if (command.toLowerCase() === '!ffotd') {
-        log_1.log(`[COMMAND] name: ffotd; arguments: ${arg}`); // Why did i make my own log solution, because i can of course
-        if (arg === '')
-            facts_1.getRandomFact(channel, sendFactLine);
-        // TODO: implement a "direct" fact caller which reads a direct fact.
-    }
-    if (command.toLowerCase() === '!pubdev') {
-        log_1.log(`[COMMAND] name: pubdev; arguments: ${arg}`);
-        // Checks if there is an argument and if its somewhat valid
-        if (arg === '' || !arg.match(/^\w+$/)) {
-            client
-                .say(channel, `${tags.username}, please provide a valid package name to search for. NotLikeThis`)
-                .catch((err) => console.error); // clean error handling Pog
-            return;
-        }
-        const search = arg.trim().toLowerCase(); // Nice and safe command handling
-        pubdev_1.getPubDevPackageInfo(channel, tags, search, sendPubDevInfo); // Call the pub.dev api and insert callback here when its done
+    const command = message.trim().split(' ')[0]?.toLowerCase(); // Nice solution: Kappa
+    let arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : ''; // Even nicer solution, not error prone Kappa
+    arg = arg.trim().toLowerCase(); // Nice and safe command handling
+    switch (command) {
+        case '!ffotd':
+            log_1.log(`[COMMAND] name: ffotd; arguments: ${arg}`); // Why did i make my own log solution, because i can of course
+            if (arg === '')
+                facts_1.getRandomFact(channel, sendFactLine); // TODO: Implement a direct fact caller
+            break;
+        case '!pubdev':
+            log_1.log(`[COMMAND] name: pubdev; arguments: ${arg}`);
+            // Checks if there is an argument and if its somewhat valid
+            if (arg === '' || !arg.match(/^\w+$/)) {
+                client
+                    .say(channel, `${tags.username}, please provide a valid package name to search for. NotLikeThis`)
+                    .catch((err) => console.error); // clean error handling Pog
+                return;
+            }
+            pubdev_1.getPubDevPackageInfo(channel, tags, arg, sendPubDevInfo); // Call the pub.dev api and insert callback here when its done
+            break;
+        case '!addfact':
+            // for later if (arg !== '') handleFactAdd(channel, tags, client, message); // We pass the message as this might require some more argument handling
+            break;
+        default:
+            if (command.indexOf('!') > -1)
+                log_1.log(`[COMMAND] command not found: ${command}`);
+            break;
     }
 });
 /**
