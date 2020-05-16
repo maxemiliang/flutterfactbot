@@ -7,7 +7,7 @@ import { log } from './log';
 // Initalizes the twitch bot client
 const client = tmi.Client({
 	options: {
-		debug: process.env.NODE_ENV == 'production' ? false : true,
+		debug: process.env.NODE_ENV === 'production' ? false : true,
 	},
 	connection: {
 		reconnect: true,
