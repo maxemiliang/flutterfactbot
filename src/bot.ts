@@ -59,6 +59,14 @@ client.on('message', (channel, tags, message, self) => {
 				)
 				.catch((err) => console.error);
 			break;
+		case '!nightbot':
+			client
+				.say(
+					channel,
+					'Nightbot is currently down, for hackathon info use command !fthon'
+				)
+				.catch((err) => console.error);
+			break;
 		default:
 			if (command.indexOf('!') > -1)
 				log(`[COMMAND] command not found: ${command}`);

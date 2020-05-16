@@ -72,6 +72,11 @@ client.on('message', (channel, tags, message, self) => {
                 .say(channel, 'FlutterThon is a 24 hour livestream event where your goal is to build the best thing you can with Flutter! The event has started, but you can still sign up and participate by visiting https://flutterthon-2020.devpost.com/ to get started! Make sure to join the !discord for more information. Happy Hacking :).')
                 .catch((err) => console.error);
             break;
+        case '!nightbot':
+            client
+                .say(channel, 'Nightbot is currently down, for info use command !fthon')
+                .catch((err) => console.error);
+            break;
         default:
             if (command.indexOf('!') > -1)
                 log_1.log(`[COMMAND] command not found: ${command}`);
