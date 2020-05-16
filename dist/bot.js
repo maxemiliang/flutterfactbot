@@ -26,7 +26,7 @@ const log_1 = require("./log");
 // Initalizes the twitch bot client
 const client = tmi.Client({
     options: {
-        debug: process.env.NODE_ENV == 'production' ? false : true,
+        debug: process.env.NODE_ENV === 'production' ? false : true,
     },
     connection: {
         reconnect: true,
@@ -44,7 +44,7 @@ client.connect();
 client.on('message', (channel, tags, message, self) => {
     if (self)
         return; // Dont do anything with your own messages
-    const command = message.trim().split(' ')[0]?.toLowerCase(); // Nice solution: Kappa
+    const command = message.trim().split(' ')[0].toLowerCase(); // Nice solution: Kappa
     let arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : ''; // Even nicer solution, not error prone Kappa
     arg = arg.trim().toLowerCase(); // Nice and safe command handling
     switch (command) {

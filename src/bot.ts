@@ -26,7 +26,7 @@ client.connect();
 // Start monitoring messages
 client.on('message', (channel, tags, message, self) => {
 	if (self) return; // Dont do anything with your own messages
-	const command = message.trim().split(' ')[0]?.toLowerCase(); // Nice solution: Kappa
+	const command = message.trim().split(' ')[0].toLowerCase(); // Nice solution: Kappa
 	let arg = message.trim().split(' ').length > 1 ? message.split(' ')[1] : ''; // Even nicer solution, not error prone Kappa
 	arg = arg.trim().toLowerCase(); // Nice and safe command handling
 	switch (command) {
