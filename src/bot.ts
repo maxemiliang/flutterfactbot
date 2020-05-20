@@ -3,6 +3,7 @@ import { getRandomFact } from './facts';
 import { AxiosResponse } from 'axios';
 import { getPubDevPackageInfo } from './pubdev';
 import { log } from './log';
+import { getNpmPackageInfo } from './npm';
 
 // Initalizes the twitch bot client
 const client = tmi.Client({
@@ -48,24 +49,20 @@ client.on('message', (channel, tags, message, self) => {
 			}
 			getPubDevPackageInfo(channel, tags, arg, sendPubDevInfo); // Call the pub.dev api and insert callback here when its done
 			break;
+		case '!npm':
+			if (arg === '' || !arg.match(/^[a-zA-Z0-9-_]+$/)) {
+				client
+					.say(
+						channel,
+						`${tags.username}, please provide a valid package name to search for. NotLikeThis`
+					)
+					.catch((err) => console.error); // clean error handling Pog
+				return;
+			}
+			getNpmPackageInfo(channel, tags, arg, sendNpmInfo);
+			break;
 		case '!addfact':
 			// for later if (arg !== '') handleFactAdd(channel, tags, client, message); // We pass the message as this might require some more argument handling
-			break;
-		case '!fthon':
-			client
-				.say(
-					channel,
-					'FlutterThon is a 24 hour livestream event where your goal is to build the best thing you can with Flutter! The event has started, but you can still sign up and participate by visiting https://flutterthon-2020.devpost.com/ to get started! Make sure to join the !discord for more information. Happy Hacking :).'
-				)
-				.catch((err) => console.error);
-			break;
-		case '!nightbot':
-			client
-				.say(
-					channel,
-					'Nightbot is currently down, for hackathon info use command !fthon'
-				)
-				.catch((err) => console.error);
 			break;
 		default:
 			if (command.indexOf('!') > -1)
@@ -103,7 +100,30 @@ const sendPubDevInfo = (
 	client
 		.say(
 			channel,
-			`${tags.username}: 📦 name: "${response.latest.pubspec.name}" 📦 description: "${response.latest.pubspec.description}" 📦 pubdev: https://pub.dev/packages/${response.latest.pubspec.name}`
+			`${tags.username}: [PUBDEV] 📦 name: "${response.latest.pubspec.name}" 📦 description: "${response.latest.pubspec.description}" 📦 pubdev: https://pub.dev/packages/${response.latest.pubspec.name}`
+		)
+		.catch((err) => console.error);
+}; // Have to be done with a callback this way as async is stupid
+
+/**
+ * Sends a preformatted message to a channel
+ * @param channel channel to send message to.
+ * @param response Pub dev api response.
+ */
+const sendNpmInfo = (
+	channel: string,
+	tags: tmi.ChatUserstate,
+	response: any
+) => {
+	if (response === null) {
+		// Error handling stuff
+		client.say(channel, `${tags.username}: Package info not found FeelsBadMan`);
+		return;
+	}
+	client
+		.say(
+			channel,
+			`${tags.username}: [NPM] 📦 name: "${response.collected.metadata.name}" 📦 description: "${response.collected.metadata.description}" 📦 NPM: ${response.collected.metadata.links.npm}`
 		)
 		.catch((err) => console.error);
 }; // Have to be done with a callback this way as async is stupid
