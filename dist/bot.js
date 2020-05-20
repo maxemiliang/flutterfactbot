@@ -60,7 +60,7 @@ client.on('message', (channel, tags, message, self) => {
             if (arg === '' || !arg.match(/^\w+$/)) {
                 client
                     .say(channel, `${tags.username}, please provide a valid package name to search for. NotLikeThis`)
-                    .catch((err) => console.error); // clean error handling Pog
+                    .catch((err) => console.error(err)); // clean error handling Pog
                 return;
             }
             pubdev_1.getPubDevPackageInfo(channel, tags, arg, sendPubDevInfo); // Call the pub.dev api and insert callback here when its done
@@ -69,13 +69,18 @@ client.on('message', (channel, tags, message, self) => {
             if (arg === '' || !arg.match(/^[a-zA-Z0-9-_]+$/)) {
                 client
                     .say(channel, `${tags.username}, please provide a valid package name to search for. NotLikeThis`)
-                    .catch((err) => console.error); // clean error handling Pog
+                    .catch((err) => console.error(err)); // clean error handling Pog
                 return;
             }
             npm_1.getNpmPackageInfo(channel, tags, arg, sendNpmInfo);
             break;
         case '!addfact':
             // for later if (arg !== '') handleFactAdd(channel, tags, client, message); // We pass the message as this might require some more argument handling
+            break;
+        case '!rntradgedy':
+            client
+                .say(channel, 'Did you ever hear the tragedy of React Native? I thought not. It’s not a story the Facebook devs would tell you. It’s a Google legend. React Native was a "Native" mobile framework, so buggy and so slow it could only use the webview… It had such a knowledge of the JSX and Redux that it could even keep the 3 whole objects in store. Unfortunately, it thaught Flutter everything it knew, then Flutter killed him in his sleep. Ironic. He could save others from death, but not itself')
+                .catch((err) => console.error(err));
             break;
         default:
             if (command.indexOf('!') > -1)
@@ -106,7 +111,7 @@ const sendPubDevInfo = (channel, tags, response) => {
     }
     client
         .say(channel, `${tags.username}: [PUBDEV] 📦 name: "${response.latest.pubspec.name}" 📦 description: "${response.latest.pubspec.description}" 📦 pubdev: https://pub.dev/packages/${response.latest.pubspec.name}`)
-        .catch((err) => console.error);
+        .catch((err) => console.error(err));
 }; // Have to be done with a callback this way as async is stupid
 /**
  * Sends a preformatted message to a channel
@@ -121,7 +126,7 @@ const sendNpmInfo = (channel, tags, response) => {
     }
     client
         .say(channel, `${tags.username}: [NPM] 📦 name: "${response.collected.metadata.name}" 📦 description: "${response.collected.metadata.description}" 📦 NPM: ${response.collected.metadata.links.npm}`)
-        .catch((err) => console.error);
+        .catch((err) => console.error(err));
 }; // Have to be done with a callback this way as async is stupid
 client.on('connected', (address, port) => {
     log_1.log(`[CONNECT] Bot connected on: ${address}:${port}`); // More nice logging
