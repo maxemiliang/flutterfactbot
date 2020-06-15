@@ -72,6 +72,14 @@ client.on('message', (channel, tags, message, self) => {
 				)
 				.catch((err) => console.error(err));
 			break;
+		case '!maketheswitch':
+			client
+				.say(
+					channel,
+					'Thinking about making the switch, JUST DO IT: https://flutter.dev/docs/get-started/flutter-for/react-native-devs'
+				)
+				.catch((err) => console.error(err));
+			break;
 		default:
 			if (command.indexOf('!') > -1)
 				log(`[COMMAND] command not found: ${command}`);
