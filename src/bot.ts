@@ -1,5 +1,5 @@
 import * as tmi from 'tmi.js';
-import { getRandomFact } from './facts';
+import { getRandomFact, addFact } from './facts';
 import { getPubDevPackageInfo } from './pubdev';
 import { log } from './log';
 import { getNpmPackageInfo } from './npm';
@@ -61,7 +61,9 @@ client.on('message', (channel, tags, message, self) => {
 			getNpmPackageInfo(channel, tags, arg, sendNpmInfo);
 			break;
 		case '!addfact':
-			// for later if (arg !== '') handleFactAdd(channel, tags, client, message); // We pass the message as this might require some more argument handling
+			if (arg !== '' && tags.username === 'rushkib') {
+				addFact(arg, channel, (c) => client.say(c, 'Added fact to bot!'));
+			}
 			break;
 		case '!rntradgedy':
 			client

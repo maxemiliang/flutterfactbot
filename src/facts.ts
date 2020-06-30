@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { log } from './log';
 
 /**
  * Reads a txt file and selects a random line which is sent to the callback
@@ -16,4 +17,16 @@ export const getRandomFact = async (
 		const line = lines[Math.floor(Math.random() * lines.length)]; // Choose a random line using some very advanced math, thanks SO
 		callback(channel, line); // Call the callback with channel and the random line
 	});
+};
+
+export const addFact = async (
+	fact: string,
+	channel: string,
+	callback: (channel: string) => void
+) => {
+	fs.appendFile('facts.txt', fact, (err) => {
+		if (err) throw err;
+		log('Added fact');
+	});
+	callback(channel);
 };
