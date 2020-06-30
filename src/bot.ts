@@ -1,6 +1,5 @@
 import * as tmi from 'tmi.js';
 import { getRandomFact } from './facts';
-import { AxiosResponse } from 'axios';
 import { getPubDevPackageInfo } from './pubdev';
 import { log } from './log';
 import { getNpmPackageInfo } from './npm';

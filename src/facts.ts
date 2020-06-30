@@ -1,6 +1,4 @@
 import * as fs from 'fs';
-import tmi from 'tmi.js';
-import { log } from './log';
 
 /**
  * Reads a txt file and selects a random line which is sent to the callback
