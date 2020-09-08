@@ -74,12 +74,24 @@ client.on('message', (channel, tags, message, self) => {
             }
             npm_1.getNpmPackageInfo(channel, tags, arg, sendNpmInfo);
             break;
-        case '!addfact':
-            // for later if (arg !== '') handleFactAdd(channel, tags, client, message); // We pass the message as this might require some more argument handling
+        case '!factadd':
+            log_1.log(tags.username);
+            if (arg !== '' && tags.username === 'rushkib') {
+                const fact = message
+                    .split(' ')
+                    .reduce((p, c, i) => (i !== 0 ? p + c : ''));
+                log_1.log(fact);
+                facts_1.addFact(arg, channel, (c) => client.say(c, 'Added fact to bot!'));
+            }
             break;
         case '!rntradgedy':
             client
                 .say(channel, 'Did you ever hear the tragedy of React Native? I thought not. It’s not a story the Facebook devs would tell you. It’s a Google legend. React Native was a "Native" mobile framework, so buggy and so slow it could only use the webview… It had such a knowledge of the JSX and Redux that it could even keep the 3 whole objects in store. Unfortunately, it thaught Flutter everything it knew, then Flutter killed him in his sleep. Ironic. He could save others from death, but not itself')
+                .catch((err) => console.error(err));
+            break;
+        case '!maketheswitch':
+            client
+                .say(channel, 'Thinking about making the switch, JUST DO IT: https://flutter.dev/docs/get-started/flutter-for/react-native-devs')
                 .catch((err) => console.error(err));
             break;
         default:

@@ -11,4 +11,4 @@ Flutter is so optimized that it runs faster than your phone (results pending).
 Material design is around 40% more UX friendly than competitors. Kappa
 Flutter comes with dart devtools to easily be able to debug your poorly written code. 
 Flutter has Platform Channels which allow you to interface with platform-specific code, should you ever need it.
-My creator @rushkib, isn't actually a paid shill ( Kappa ), he just likes Flutter, alot  
+My creator @rushkib, isn't actually a paid shill ( Kappa ), he just likes Flutter, alot

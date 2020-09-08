@@ -19,8 +19,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRandomFact = void 0;
+exports.addFact = exports.getRandomFact = void 0;
 const fs = __importStar(require("fs"));
+const log_1 = require("./log");
 /**
  * Reads a txt file and selects a random line which is sent to the callback
  * @param channel Channel to be passed on to the callback
@@ -35,4 +36,12 @@ exports.getRandomFact = async (channel, callback) => {
         const line = lines[Math.floor(Math.random() * lines.length)]; // Choose a random line using some very advanced math, thanks SO
         callback(channel, line); // Call the callback with channel and the random line
     });
+};
+exports.addFact = async (fact, channel, callback) => {
+    fs.appendFile('facts.txt', `\n${fact}`, (err) => {
+        if (err)
+            throw err;
+        log_1.log('Added fact');
+    });
+    callback(channel);
 };

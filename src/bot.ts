@@ -60,8 +60,13 @@ client.on('message', (channel, tags, message, self) => {
 			}
 			getNpmPackageInfo(channel, tags, arg, sendNpmInfo);
 			break;
-		case '!addfact':
+		case '!factadd':
+			log(tags.username);
 			if (arg !== '' && tags.username === 'rushkib') {
+				const fact = message
+					.split(' ')
+					.reduce((p, c, i) => (i !== 0 ? p + c : ''));
+				log(fact);
 				addFact(arg, channel, (c) => client.say(c, 'Added fact to bot!'));
 			}
 			break;
@@ -81,6 +86,13 @@ client.on('message', (channel, tags, message, self) => {
 				)
 				.catch((err) => console.error(err));
 			break;
+		case '!dartisnifty':
+			client
+				.say(
+					channel,
+					'dart is nifty: https://clips.twitch.tv/GleamingBelovedCoyoteFutureMan Kappa'
+				)
+				.catch((err) => console.error(err));
 		default:
 			if (command.indexOf('!') > -1)
 				log(`[COMMAND] command not found: ${command}`);

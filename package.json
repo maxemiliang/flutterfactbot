@@ -11,7 +11,7 @@
 		"build": "npm run lint && npx tsc",
 		"build:docker": "docker build . -t ffotdbot",
 		"start": "node -r dotenv/config dist/bot.js",
-		"start:dev": "npx nodemon -r dotenv/config dist/bot.js",
+		"start:dev": "npx nodemon -e ts -r dotenv/config dist/bot.js",
 		"start:docker": "docker-compose up --build",
 		"lint": "npx tslint -c tslint.json 'src/**/*.ts'"
 	},

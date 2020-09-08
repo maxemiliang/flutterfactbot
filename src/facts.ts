@@ -24,7 +24,7 @@ export const addFact = async (
 	channel: string,
 	callback: (channel: string) => void
 ) => {
-	fs.appendFile('facts.txt', fact, (err) => {
+	fs.appendFile('facts.txt', `\n${fact}`, (err) => {
 		if (err) throw err;
 		log('Added fact');
 	});
