@@ -86,13 +86,6 @@ client.on('message', (channel, tags, message, self) => {
 				)
 				.catch((err) => console.error(err));
 			break;
-		case '!dartisnifty':
-			client
-				.say(
-					channel,
-					'dart is nifty: https://clips.twitch.tv/GleamingBelovedCoyoteFutureMan Kappa'
-				)
-				.catch((err) => console.error(err));
 		default:
 			if (command.indexOf('!') > -1)
 				log(`[COMMAND] command not found: ${command}`);
